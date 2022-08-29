@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
 import Input from "../elements/Input";
 import Button from "../elements/Button";
@@ -28,6 +28,8 @@ const PolicySearch = ({
     topDivider && "has-top-divider",
     bottomDivider && "has-bottom-divider"
   );
+
+  const [text, setText] = useState("");
 
   const handleClick = (e) => {
     e.preventDefault();
