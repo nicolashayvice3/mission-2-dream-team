@@ -3,9 +3,18 @@ import ButtonGroup from "../elements/ButtonGroup";
 import Button from "../elements/Button";
 import axios from 'axios';
 
+// key=AIzaSyDQIvLMqVdiQ268xSfv-pS4MNbapJRuIHE
 
 const NlpGoogle = () => {
   const [text, setText] = useState('input text to be analyzed');
+  
+  const sending = { "document": {
+      "type": "PLAIN_TEXT",
+      "language": "",
+      "content": text
+    },
+    "encodingType": "UTF16"
+  }
   
   const handleChange = (e) => {
     setText(e.target.value);
@@ -13,11 +22,11 @@ const NlpGoogle = () => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-
-      axios.post(`https://language.googleapis.com/v1beta2/documents:analyzeEntities`, { text })
+      console.log("submiting")
+      axios.post(`https://language.googleapis.com/v1beta2/documents:analyzeEntities?key=AIzaSyDQIvLMqVdiQ268xSfv-pS4MNbapJRuIHE`, sending )
       .then(res => {
-        console.log(res);
-        console.log(res.data);
+        console.log(res, "response");
+        console.log(res.data, "Data");
       })
       
     }
@@ -50,21 +59,5 @@ const NlpGoogle = () => {
     </>
   );
 };
-
-// const language = require('@google-cloud/language');
-// const client = new language.LanguageServiceClient();
-// const document = {
-//     content: text,
-//     type: 'PLAIN_TEXT',
-// };
-
-// const text = "hello world"
-
-// const [result] = await client.analyzeSentiment({document});
-// const sentiment = result.documentSentiment;
-
-// console.log(`  Magnitude: ${sentiment.magnitude}`);
-// console.log('Document sentiment:');
-// console.log(`  Score: ${sentiment.score}`);
 
 export default NlpGoogle;
