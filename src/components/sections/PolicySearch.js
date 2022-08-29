@@ -32,7 +32,12 @@ const PolicySearch = ({
   const [text, setText] = useState("");
 
   const handleClick = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleChange = (e) => {
     e.preventDefault();
+    setText(text.replace(/[^\w ]/g, " "));
   };
 
   return (
@@ -49,6 +54,7 @@ const PolicySearch = ({
           type="text"
           hasIcon="right"
           placeholder="Search our policies"
+          onChange={handleChange}
         ></Input>
         <Button color="primary" onClick={handleClick}>
           Search
