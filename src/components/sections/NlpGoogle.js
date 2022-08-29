@@ -1,35 +1,36 @@
 import React, { useState } from "react";
 import ButtonGroup from "../elements/ButtonGroup";
 import Button from "../elements/Button";
+import axios from 'axios';
 
-// const language = require('@google-cloud/language');
-// const client = new language.LanguageServiceClient();
-// const document = {
-//     content: text,
-//     type: 'PLAIN_TEXT',
-// };
-
-// const text = "hello world"
-
-// const [result] = await client.analyzeSentiment({document});
-// const sentiment = result.documentSentiment;
-
-// console.log(`  Magnitude: ${sentiment.magnitude}`);
-// console.log('Document sentiment:');
-// console.log(`  Score: ${sentiment.score}`);
+// key=AIzaSyDQIvLMqVdiQ268xSfv-pS4MNbapJRuIHE
 
 const NlpGoogle = () => {
-    const [text, setText] = useState('');
-    
-    const handleChange = (e) => {
-        setText(e.target.value);
+  const [text, setText] = useState('input text to be analyzed');
+  
+  const sending = { "document": {
+      "type": "PLAIN_TEXT",
+      "language": "",
+      "content": text
+    },
+    "encodingType": "UTF16"
+  }
+  
+  const handleChange = (e) => {
+    setText(e.target.value);
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-
+      e.preventDefault();
+      console.log("submiting")
+      axios.post(`https://language.googleapis.com/v1beta2/documents:analyzeEntities?key=AIzaSyDQIvLMqVdiQ268xSfv-pS4MNbapJRuIHE`, sending )
+      .then(res => {
+        console.log(res, "response");
+        console.log(res.data, "Data");
+      })
+      
     }
-
+    
   return (
     <>
       <div className="reveal-from-bottom" data-reveal-delay="600">
@@ -37,13 +38,13 @@ const NlpGoogle = () => {
         <p
                 className="m-0 mb-32 reveal-from-bottom"
                 data-reveal-delay="400"
-              >
+                >
                 See what google's NLP can do. Upload some text using the
                 button below...
               </p>
         <ButtonGroup>
         <form>
-        <input type="text" onChange={handleChange} name="NLP" />
+        <input type="text" onChange={handleChange} name="NLP" placeholder={text} size="50" />
           <Button onClick={handleSubmit} color="primary">
             Upload
           </Button>
@@ -53,7 +54,7 @@ const NlpGoogle = () => {
       <div
         className="container-xs reveal-from-bottom container_hello"
         data-reveal-delay="700"
-      >
+        >
       </div>
     </>
   );

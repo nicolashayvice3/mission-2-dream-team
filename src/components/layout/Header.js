@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import Logo from "./partials/Logo";
+import { Link } from "react-router-dom";
 
 const propTypes = {
   navPosition: PropTypes.string,
@@ -85,6 +87,7 @@ const Header = ({
             bottomDivider && "has-bottom-divider"
           )}
         >
+          <Logo />
           {!hideNav && (
             <>
               <button
@@ -100,7 +103,23 @@ const Header = ({
               <nav
                 ref={nav}
                 className={classNames("header-nav", isActive && "is-active")}
-              ></nav>
+              >
+                <div className="header-nav-inner">
+                  <ul
+                    className={classNames(
+                      "list-reset text-xs header-nav-right",
+                      navPosition && `header-nav-${navPosition}`
+                    )}
+                  >
+                    <li>
+                      <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                      <Link to="/PolicySearch">Queries</Link>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
             </>
           )}
         </div>
