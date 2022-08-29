@@ -32,12 +32,13 @@ const PolicySearch = ({
   const [text, setText] = useState("");
 
   const handleClick = (e) => {
-    setText(e.target.value);
+    e.preventDefault();
+    setText(text.replace(/[^\w ]/g, " "));
   };
 
   const handleChange = (e) => {
+    setText(e.target.value);
     e.preventDefault();
-    setText(text.replace(/[^\w ]/g, " "));
   };
 
   return (
@@ -45,13 +46,13 @@ const PolicySearch = ({
       <div className="container-sm reveal-from-bottom">
         <div className={innerClasses}>
           <h3 className="mt-0 mb-16 reveal-from-bottom" data-reveal-delay="200">
-            Have a question about the policy? <br /> Search it{" "}
+            Wanna clean your text from special characters? <br /> Search it{" "}
             <span className="text-color-primary">below</span>.
           </h3>
         </div>
         <Input
           id="query"
-          type="text"
+          type="search"
           hasIcon="right"
           placeholder="Search our policies"
           onChange={handleChange}
@@ -60,7 +61,7 @@ const PolicySearch = ({
           Search
         </Button>
         <h6>
-          <div id="answer"></div>
+          {text}
         </h6>
       </div>
     </section>
