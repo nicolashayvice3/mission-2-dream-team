@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const NlpGoogle = () => {
   const [text, setText] = useState('input text to be analyzed');
+  const [analyzedText, analyzedSetText] = useState("");
   
   const sending = { "document": {
       "type": "PLAIN_TEXT",
@@ -24,8 +25,11 @@ const NlpGoogle = () => {
       console.log("submiting")
       axios.post(`https://language.googleapis.com/v1beta2/documents:analyzeEntities?key=${secrets.googleApiKey}`, sending )
       .then(res => {
-        // setText(res.)
-        console.log(res, "response");
+        let types = []
+        for (let i = 0; i < res.data.entities.length; i++) {
+          types.push(res.data.entities[i].type, " ")
+        }
+        analyzedSetText(types)
         console.log(res.data, "Data");
       })
       
@@ -39,7 +43,7 @@ const NlpGoogle = () => {
                 className="m-0 mb-32 reveal-from-bottom"
                 data-reveal-delay="400"
                 >
-                See what google's NLP can do. Upload some text using the
+                See what google's NLP can do, picking up entities. Upload some text using the
                 button below...
               </p>
         <ButtonGroup>
@@ -51,10 +55,11 @@ const NlpGoogle = () => {
         </form>
         </ButtonGroup>
       </div>
-      <div
-        className="container-xs reveal-from-bottom container_hello"
-        data-reveal-delay="700"
-        >
+      <div>
+        <br></br>
+        <p>
+          types: {analyzedText}
+        </p>
       </div>
     </>
   );
