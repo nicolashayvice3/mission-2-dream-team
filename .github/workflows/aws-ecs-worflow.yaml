@@ -16,12 +16,12 @@ on:
 
 env:
   AWS_REGION: us-east-1                   
-  ECR_REPOSITORY: mission4-testing-ecr           
+  ECR_REPOSITORY: mission4-repo-ecr           
   ECS_SERVICE: mission4-service-ecs                 
   ECS_CLUSTER: mission4-cluster-ecs                 
   ECS_TASK_DEFINITION: ./escTask.json
                                                # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: mission4-task-ecs           
+  CONTAINER_NAME: container           
                                                
 
 jobs:
